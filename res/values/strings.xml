@@ -3,6 +3,8 @@
 
     <string name="app_name">Hex Board Game</string>
     <string name="action_settings">Settings</string>
-    <string name="hello_world">Hello world!</string>
+    <string name="play_btn_txt">Play!</string>
+    <string name="highscores_btn_txt">View Highscores</string>
+    <string name="about_btn_txt">About</string>
 
 </resources>
