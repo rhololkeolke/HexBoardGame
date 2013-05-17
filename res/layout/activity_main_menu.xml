@@ -11,10 +11,12 @@
     tools:context=".MainMenu" >
 
     <Button
-        style="@style/MenuButton"
         android:id="@+id/play_btn"
+        style="@style/MenuButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:paddingLeft="55dp"
+        android:paddingRight="55dp"
         android:text="@string/play_btn_txt" />
 
     <Button
@@ -25,10 +27,12 @@
         android:text="@string/highscores_btn_txt" />
 
     <Button
-        style="@style/MenuButton"
         android:id="@+id/about_btn"
+        style="@style/MenuButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:paddingLeft="55dp"
+        android:paddingRight="55dp"
         android:text="@string/about_btn_txt" />
 
 </LinearLayout>
