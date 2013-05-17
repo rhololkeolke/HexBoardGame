@@ -24,7 +24,7 @@
         </activity>
         <activity
             android:name="com.devinschwab.hexboardgame.GameActivity"
-            android:label="@string/title_activity_game" >
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" >
         </activity>
     </application>
 

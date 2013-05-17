@@ -6,6 +6,5 @@
     <string name="single_player_btn_txt">Single Player</string>
     <string name="pass_and_play_btn_txt">Pass and Play</string>
     <string name="local_network_btn_txt">Local Network</string>
-    <string name="title_activity_game">Game</string>
 
 </resources>
