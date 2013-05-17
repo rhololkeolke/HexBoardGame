@@ -1,7 +1,7 @@
 package com.devinschwab.hexboardgame.rules;
 
 public class SinglePlayerRules implements GameRules{
-
+	
 	@Override
 	public void beforeInput() {
 		// TODO Auto-generated method stub
@@ -15,6 +15,24 @@ public class SinglePlayerRules implements GameRules{
 	@Override
 	public void afterRender() {
 		// TODO Auto-generated method stub
+	}
+
+	@Override
+	public void start() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void stop() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void pause() {
+		// TODO Auto-generated method stub
+		
 	}
 
 }
