@@ -5,6 +5,13 @@ import android.app.Activity;
 import android.view.Menu;
 
 public class GameActivity extends Activity {
+	
+	public static enum GameTypes { 
+		SINGLE_PLAYER,
+		PASS_AND_PLAY,
+		LOCAL_NETWORK,
+		INTERNET	
+	}
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {

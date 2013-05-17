@@ -10,9 +10,7 @@ import org.junit.runner.RunWith;
 import android.content.Intent;
 import android.widget.Button;
 
-import com.devinschwab.hexboardgame.AboutActivity;
 import com.devinschwab.hexboardgame.GameActivity;
-import com.devinschwab.hexboardgame.HighscoresActivity;
 import com.devinschwab.hexboardgame.MainMenuActivity;
 import com.devinschwab.hexboardgame.R;
 import com.xtremelabs.robolectric.Robolectric;
@@ -33,8 +31,8 @@ public class MainMenuActivityTest{
 	}
 	
 	@Test
-	public void playButtonLaunchesGameActivity() throws Exception {
-		button = (Button) activity.findViewById(R.id.play_btn);
+	public void singlePlayerButtonLaunchesSinglePlayerGame() throws Exception {
+		button = (Button) activity.findViewById(R.id.single_player_btn);
 		assertNotNull(button);
 		
 		button.performClick();
@@ -44,11 +42,12 @@ public class MainMenuActivityTest{
         assertNotNull("No new activity created", intent);
         ShadowIntent shadowIntent = Robolectric.shadowOf(intent);
         assertEquals(shadowIntent.getComponent().getClassName(), GameActivity.class.getName());
+        assertEquals(GameActivity.GameTypes.SINGLE_PLAYER, intent.getExtras().get("game type"));
 	}
 	
 	@Test
-	public void highscoresButtonLaunchesHighscoresActivity() throws Exception {
-		button = (Button) activity.findViewById(R.id.highscores_btn);
+	public void passAndPlayButtonLaunchesPassAndPlayGame() throws Exception {
+		button = (Button) activity.findViewById(R.id.pass_and_play_btn);
 		assertNotNull(button);
 		
 		button.performClick();
@@ -57,12 +56,13 @@ public class MainMenuActivityTest{
         Intent intent = shadowActivity.getNextStartedActivity();
         assertNotNull("No new activity created", intent);
         ShadowIntent shadowIntent = Robolectric.shadowOf(intent);
-        assertEquals(shadowIntent.getComponent().getClassName(), HighscoresActivity.class.getName());
+        assertEquals(shadowIntent.getComponent().getClassName(), GameActivity.class.getName());
+        assertEquals(GameActivity.GameTypes.PASS_AND_PLAY, intent.getExtras().get("game type"));
 	}
 	
 	@Test
-	public void aboutButtonLaunchesAboutActivity() throws Exception {
-		button = (Button) activity.findViewById(R.id.about_btn);
+	public void localNetworkButtonLaunchesLocalNetworkGame() throws Exception {
+		button = (Button) activity.findViewById(R.id.local_network_btn);
 		assertNotNull(button);
 		
 		button.performClick();
@@ -71,6 +71,7 @@ public class MainMenuActivityTest{
         Intent intent = shadowActivity.getNextStartedActivity();
         assertNotNull("No new activity created", intent);
         ShadowIntent shadowIntent = Robolectric.shadowOf(intent);
-        assertEquals(shadowIntent.getComponent().getClassName(), AboutActivity.class.getName());
+        assertEquals(shadowIntent.getComponent().getClassName(), GameActivity.class.getName());
+        assertEquals(GameActivity.GameTypes.LOCAL_NETWORK, intent.getExtras().get("game type"));
 	}
 }

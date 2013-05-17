@@ -28,13 +28,13 @@ public class MainMenuActivity extends Activity implements OnClickListener {
         super.onCreate(savedInstanceState);        
         setContentView(R.layout.activity_main_menu);
         
-        Button playButton = (Button) findViewById(R.id.play_btn);
-        Button highscoresButton = (Button) findViewById(R.id.highscores_btn);
-        Button aboutButton = (Button) findViewById(R.id.about_btn);
+        Button single_player_btn = (Button) findViewById(R.id.single_player_btn);
+        Button pass_and_play_btn = (Button) findViewById(R.id.pass_and_play_btn);
+        Button local_network_btn = (Button) findViewById(R.id.local_network_btn);
         
-        playButton.setOnClickListener(this);
-        highscoresButton.setOnClickListener(this);
-        aboutButton.setOnClickListener(this);
+        single_player_btn.setOnClickListener(this);
+        pass_and_play_btn.setOnClickListener(this);
+        local_network_btn.setOnClickListener(this);
     }
 
 
@@ -56,21 +56,19 @@ public class MainMenuActivity extends Activity implements OnClickListener {
 		Intent selectedActivity;
 		switch(v.getId())
 		{
-		case R.id.play_btn:
+		case R.id.single_player_btn:
 			//! @todo play_btn case: Implement Me!
 			Log.d("buton click", "MainMenu: play_btn was clicked");
 			selectedActivity = new Intent(this, GameActivity.class);
 			break;
-		case R.id.highscores_btn:
+		case R.id.pass_and_play_btn:
 			//! @todo highscores_btn case: Implement me!
 			Log.d("button click", "MainMenu: highscores_btn was clicked");
-			selectedActivity = new Intent(this, HighscoresActivity.class);
-			break;
-		case R.id.about_btn:
+			return;
+		case R.id.local_network_btn:
 			//! @todo about_btn case: Implement me!
 			Log.d("button click", "MainMenu: about_btn was clicked");
-			selectedActivity = new Intent(this, AboutActivity.class);
-			break;
+			return;
 		default:
 			Log.e("button click", "MainMenu: Unknown button was clicked: " + Integer.toString(v.getId()));
 			return;
