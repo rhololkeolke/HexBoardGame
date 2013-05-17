@@ -1,4 +1,4 @@
-package com.devinschwab.hexboardgame;
+package com.devinschwab.hexboardgame.rules;
 
 public interface GameRules {
 	void beforeInput();
