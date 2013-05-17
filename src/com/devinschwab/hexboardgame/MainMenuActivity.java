@@ -1,6 +1,7 @@
 package com.devinschwab.hexboardgame;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -52,24 +53,29 @@ public class MainMenuActivity extends Activity implements OnClickListener {
      */
 	@Override
 	public void onClick(View v) {
+		Intent selectedActivity;
 		switch(v.getId())
 		{
 		case R.id.play_btn:
 			//! @todo play_btn case: Implement Me!
 			Log.d("buton click", "MainMenu: play_btn was clicked");
+			selectedActivity = new Intent(this, GameActivity.class);
 			break;
 		case R.id.highscores_btn:
 			//! @todo highscores_btn case: Implement me!
 			Log.d("button click", "MainMenu: highscores_btn was clicked");
+			selectedActivity = new Intent(this, HighscoresActivity.class);
 			break;
 		case R.id.about_btn:
 			//! @todo about_btn case: Implement me!
 			Log.d("button click", "MainMenu: about_btn was clicked");
+			selectedActivity = new Intent(this, AboutActivity.class);
 			break;
 		default:
 			Log.e("button click", "MainMenu: Unknown button was clicked: " + Integer.toString(v.getId()));
-			break;
+			return;
 		}
+		startActivity(selectedActivity);
 	}
     
     
