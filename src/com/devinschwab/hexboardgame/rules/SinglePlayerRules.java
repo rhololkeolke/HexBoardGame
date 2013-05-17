@@ -1,7 +1,13 @@
 package com.devinschwab.hexboardgame.rules;
 
+import com.devinschwab.hexboardgame.HexBoard;
+
 public class SinglePlayerRules implements GameRules{
 	
+	public SinglePlayerRules(HexBoard board) {
+		// TODO Auto-generated constructor stub
+	}
+
 	@Override
 	public void beforeInput() {
 		// TODO Auto-generated method stub

@@ -13,12 +13,14 @@ public class GameSurfaceView extends SurfaceView implements SurfaceHolder.Callba
 	private SurfaceHolder sh_;
 	private final Paint paint_ = new Paint(Paint.ANTI_ALIAS_FLAG);
 	private Context ctx_;
+	private HexBoard board_;
 
-	public GameSurfaceView(Context context) {
+	public GameSurfaceView(Context context, HexBoard board) {
 		super(context);
 		sh_ = getHolder();
 		sh_.addCallback(this);
 		ctx_ = context;
+		board_ = board;
 		setFocusable(true);
 	}
 

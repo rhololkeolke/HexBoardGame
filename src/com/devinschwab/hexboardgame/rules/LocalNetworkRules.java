@@ -1,6 +1,12 @@
 package com.devinschwab.hexboardgame.rules;
 
+import com.devinschwab.hexboardgame.HexBoard;
+
 public class LocalNetworkRules implements GameRules {
+
+	public LocalNetworkRules(HexBoard board) {
+		// TODO Auto-generated constructor stub
+	}
 
 	@Override
 	public void beforeInput() {

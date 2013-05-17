@@ -24,19 +24,22 @@ public class GameActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState){
 		super.onCreate(savedInstanceState);
-		GameSurfaceView surface_view = new GameSurfaceView(this);
+		
+		HexBoard board = new HexBoard();
+		
+		GameSurfaceView surface_view = new GameSurfaceView(this, board);
 		
 		GameRules rules = null;
 		switch((GameActivity.GameTypes) this.getIntent().getSerializableExtra(GameActivity.GAME_TYPE_KEY))
 		{
 		case SINGLE_PLAYER:
-			rules = new SinglePlayerRules();
+			rules = new SinglePlayerRules(board);
 			break;
 		case PASS_AND_PLAY:
-			rules = new PassAndPlayRules();
+			rules = new PassAndPlayRules(board);
 			break;
 		case LOCAL_NETWORK:
-			rules = new LocalNetworkRules();
+			rules = new LocalNetworkRules(board);
 			break;
 		default:
 			Log.e("game type", "Unrecognized game type");
