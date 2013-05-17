@@ -53,27 +53,32 @@ public class MainMenuActivity extends Activity implements OnClickListener {
      */
 	@Override
 	public void onClick(View v) {
-		Intent selectedActivity;
+		Intent selected_activity;
 		switch(v.getId())
 		{
 		case R.id.single_player_btn:
 			//! @todo play_btn case: Implement Me!
 			Log.d("buton click", "MainMenu: play_btn was clicked");
-			selectedActivity = new Intent(this, GameActivity.class);
+			selected_activity = new Intent(this, GameActivity.class);
+			selected_activity.putExtra(GameActivity.GAME_TYPE_KEY, GameActivity.GameTypes.SINGLE_PLAYER);
 			break;
 		case R.id.pass_and_play_btn:
 			//! @todo highscores_btn case: Implement me!
 			Log.d("button click", "MainMenu: highscores_btn was clicked");
-			return;
+			selected_activity = new Intent(this, GameActivity.class);
+			selected_activity.putExtra(GameActivity.GAME_TYPE_KEY, GameActivity.GameTypes.PASS_AND_PLAY);
+			break;
 		case R.id.local_network_btn:
 			//! @todo about_btn case: Implement me!
 			Log.d("button click", "MainMenu: about_btn was clicked");
-			return;
+			selected_activity = new Intent(this, GameActivity.class);
+			selected_activity.putExtra(GameActivity.GAME_TYPE_KEY, GameActivity.GameTypes.LOCAL_NETWORK);
+			break;
 		default:
 			Log.e("button click", "MainMenu: Unknown button was clicked: " + Integer.toString(v.getId()));
 			return;
 		}
-		startActivity(selectedActivity);
+		startActivity(selected_activity);
 	}
     
     

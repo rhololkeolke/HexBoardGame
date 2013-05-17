@@ -42,7 +42,7 @@ public class MainMenuActivityTest{
         assertNotNull("No new activity created", intent);
         ShadowIntent shadowIntent = Robolectric.shadowOf(intent);
         assertEquals(shadowIntent.getComponent().getClassName(), GameActivity.class.getName());
-        assertEquals(GameActivity.GameTypes.SINGLE_PLAYER, intent.getExtras().get("game type"));
+        assertEquals(GameActivity.GameTypes.SINGLE_PLAYER, intent.getExtras().get(GameActivity.GAME_TYPE_KEY));
 	}
 	
 	@Test
@@ -57,7 +57,7 @@ public class MainMenuActivityTest{
         assertNotNull("No new activity created", intent);
         ShadowIntent shadowIntent = Robolectric.shadowOf(intent);
         assertEquals(shadowIntent.getComponent().getClassName(), GameActivity.class.getName());
-        assertEquals(GameActivity.GameTypes.PASS_AND_PLAY, intent.getExtras().get("game type"));
+        assertEquals(GameActivity.GameTypes.PASS_AND_PLAY, intent.getExtras().get(GameActivity.GAME_TYPE_KEY));
 	}
 	
 	@Test
@@ -72,6 +72,6 @@ public class MainMenuActivityTest{
         assertNotNull("No new activity created", intent);
         ShadowIntent shadowIntent = Robolectric.shadowOf(intent);
         assertEquals(shadowIntent.getComponent().getClassName(), GameActivity.class.getName());
-        assertEquals(GameActivity.GameTypes.LOCAL_NETWORK, intent.getExtras().get("game type"));
+        assertEquals(GameActivity.GameTypes.LOCAL_NETWORK, intent.getExtras().get(GameActivity.GAME_TYPE_KEY));
 	}
 }

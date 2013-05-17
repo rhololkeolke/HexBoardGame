@@ -6,6 +6,8 @@ import android.view.Menu;
 
 public class GameActivity extends Activity {
 	
+	public static final String GAME_TYPE_KEY = "game type";
+	
 	public static enum GameTypes { 
 		SINGLE_PLAYER,
 		PASS_AND_PLAY,
