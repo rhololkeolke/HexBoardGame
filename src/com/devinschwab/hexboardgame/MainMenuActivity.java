@@ -15,7 +15,7 @@ import android.widget.Button;
  * @brief Default Activity. Displays the game's main menu
  *
  */
-public class MainMenu extends Activity implements OnClickListener {
+public class MainMenuActivity extends Activity implements OnClickListener {
 
 	/**
 	 * @brief Creates the MainMenu activity
@@ -23,7 +23,7 @@ public class MainMenu extends Activity implements OnClickListener {
 	 * Sets up the click listener for the buttons.
 	 */
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+	public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);        
         setContentView(R.layout.activity_main_menu);
         

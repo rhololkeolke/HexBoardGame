@@ -10,17 +10,30 @@
 
     <application
         android:allowBackup="true"
+        android:debuggable="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name="com.devinschwab.hexboardgame.MainMenu"
+            android:name="com.devinschwab.hexboardgame.MainMenuActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name="com.devinschwab.hexboardgame.GameActivity"
+            android:label="@string/title_activity_game" >
+        </activity>
+        <activity
+            android:name="com.devinschwab.hexboardgame.HighscoresActivity"
+            android:label="@string/title_activity_highscores" >
+        </activity>
+        <activity
+            android:name="com.devinschwab.hexboardgame.AboutActivity"
+            android:label="@string/title_activity_about" >
         </activity>
     </application>
 
