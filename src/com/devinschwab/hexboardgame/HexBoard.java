@@ -27,10 +27,11 @@ public class HexBoard {
 	{
 		this.context = context;
 		
-		bitmapXSpacing = 51;
-		bitmapYSpacing = 70;
+		bitmapScale = 65;
+		
+		bitmapXSpacing = (int)((51.0/70.0)*bitmapScale);
+		bitmapYSpacing = bitmapScale;
 		bitmapRowOffset = bitmapYSpacing/2;
-		bitmapScale = 70;
 		
 		// load the bitmaps
 		blankHex = BitmapFactory.decodeResource(context.getResources(), R.drawable.blank_hex);
@@ -43,14 +44,31 @@ public class HexBoard {
 		redHex = Bitmap.createScaledBitmap(redHex, bitmapScale, bitmapScale, false);
 		
 		
-		hextiles = new HexTile[size][size];
-		for(int i=0; i<size; i++)
+		hextiles = new HexTile[size+2][size+2];
+		for(int j=1; j<size+1; j++)
 		{
-			for(int j=0; j<size; j++)
+			hextiles[0][j] = new HexTile(1);
+			hextiles[size+1][j] = new HexTile(1);
+		}
+		for(int i=1; i<size+1; i++)
+		{
+			hextiles[i][0] = new HexTile(2);
+			hextiles[i][size+1] = new HexTile(2);
+		}
+
+		for(int i=1; i<size+1; i++)
+		{
+			for(int j=1; j<size+1; j++)
 			{
 				hextiles[i][j] = new HexTile(0);
 			}
 		}
+		
+		// set these tiles not to be drawn
+		hextiles[0][0] = new HexTile(-1);
+		hextiles[0][size+1] = new HexTile(2);
+		hextiles[size+1][0] = new HexTile(2);
+		hextiles[size+1][size+1] = new HexTile(-1);
 	}
 	
 	public void draw(Canvas canvas) {
@@ -58,16 +76,24 @@ public class HexBoard {
 		{
 			for(int j=0; j<hextiles[i].length; j++)
 			{
+				if(hextiles[i][j] == null)
+				{
+					Log.d(TAG, "Null hextile: (" + i + "," + j + ")");
+					continue;
+				}
 				switch(hextiles[i][j].getPlayer())
 				{
+				case -1:
+					// do nothing (this is for the corners
+					break;
 				case 0:
 					canvas.drawBitmap(blankHex, j*bitmapXSpacing, i*bitmapYSpacing+j*bitmapRowOffset, null);
 					break;
 				case 1:
-					canvas.drawBitmap(blueHex, j*bitmapXSpacing-i*bitmapYSpacing, i*bitmapRowOffset, null);
+					canvas.drawBitmap(blueHex, j*bitmapXSpacing, i*bitmapYSpacing+j*bitmapRowOffset, null);
 					break;
 				case 2:
-					canvas.drawBitmap(redHex, j*bitmapXSpacing-i*bitmapYSpacing, i*bitmapRowOffset, null);
+					canvas.drawBitmap(redHex, j*bitmapXSpacing, i*bitmapYSpacing+j*bitmapRowOffset, null);
 					break;
 				default:
 					Log.d(TAG, "Unknown player " + hextiles[i][j].getPlayer());
