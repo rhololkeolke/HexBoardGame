@@ -37,7 +37,7 @@ public class MainGameThread extends Thread {
 		Log.d(TAG, "Starting game loop");
 		
 		long beginTime; // the time when the cycle began
-		long timeDiff; // the time it took for the cyle to execute
+		long timeDiff; // the time it took for the cycle to execute
 		int sleepTime = 0; // ms to sleep (<0 if we're behind)
 		int framesSkipped; // number of frames being skipped
 				
