@@ -6,7 +6,7 @@ import android.view.SurfaceHolder;
 
 public class MainGameThread extends Thread {
 	
-	private static final String TAG="MainGameThread";
+	private static final String TAG = MainGameThread.class.getSimpleName();
 
 	private SurfaceHolder surfaceHolder;
 	private MainGamePanel gamePanel;
