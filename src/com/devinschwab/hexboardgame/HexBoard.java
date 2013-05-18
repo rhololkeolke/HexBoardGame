@@ -12,12 +12,14 @@ public class HexBoard {
 	private static final String TAG = HexBoard.class.getSimpleName();
 	
 	private HexTile hextiles[][];
-	
-	private final Context context;
-	
+		
 	private Bitmap blankHex;
 	private Bitmap blueHex;
 	private Bitmap redHex;
+	
+	private Bitmap scaledBlankHex;
+	private Bitmap scaledBlueHex;
+	private Bitmap scaledRedHex;
 	
 	private int bitmapXSpacing;
 	private int bitmapYSpacing;
@@ -25,25 +27,13 @@ public class HexBoard {
 	private int bitmapScale;
 	
 	public HexBoard(Context context, int size)
-	{
-		this.context = context;
-		
-		bitmapScale = 65;
-		
-		bitmapXSpacing = (int)((51.0/70.0)*bitmapScale);
-		bitmapYSpacing = bitmapScale;
-		bitmapRowOffset = bitmapYSpacing/2;
-		
+	{		
 		// load the bitmaps
 		blankHex = BitmapFactory.decodeResource(context.getResources(), R.drawable.blank_hex);
 		blueHex = BitmapFactory.decodeResource(context.getResources(), R.drawable.blue_hex);
 		redHex = BitmapFactory.decodeResource(context.getResources(), R.drawable.red_hex);
-		
-		// scale the bitmaps
-		blankHex = Bitmap.createScaledBitmap(blankHex, bitmapScale, bitmapScale, false);
-		blueHex = Bitmap.createScaledBitmap(blueHex, bitmapScale, bitmapScale, false);
-		redHex = Bitmap.createScaledBitmap(redHex, bitmapScale, bitmapScale, false);
-		
+
+		updateScale(.65f);
 		
 		hextiles = new HexTile[size+2][size+2];
 		for(int j=1; j<size+1; j++)
@@ -72,6 +62,19 @@ public class HexBoard {
 		hextiles[size+1][size+1] = new HexTile(-1);
 	}
 	
+	public void updateScale(float scale) {
+		bitmapScale = (int)(100*scale);
+		
+		bitmapXSpacing = (int)((51.0/70.0)*bitmapScale);
+		bitmapYSpacing = bitmapScale;
+		bitmapRowOffset = bitmapYSpacing/2;
+		
+		// scale the bitmaps
+		scaledBlankHex = Bitmap.createScaledBitmap(blankHex, bitmapScale, bitmapScale, false);
+		scaledBlueHex = Bitmap.createScaledBitmap(blueHex, bitmapScale, bitmapScale, false);
+		scaledRedHex = Bitmap.createScaledBitmap(redHex, bitmapScale, bitmapScale, false);
+	}
+	
 	public void draw(Canvas canvas) {
 		for(int i=0; i<hextiles.length; i++)
 		{
@@ -88,13 +91,13 @@ public class HexBoard {
 					// do nothing (this is for the corners)
 					break;
 				case 0:
-					canvas.drawBitmap(blankHex, j*bitmapXSpacing, i*bitmapYSpacing+j*bitmapRowOffset, null);
+					canvas.drawBitmap(scaledBlankHex, j*bitmapXSpacing, i*bitmapYSpacing+j*bitmapRowOffset, null);
 					break;
 				case 1:
-					canvas.drawBitmap(blueHex, j*bitmapXSpacing, i*bitmapYSpacing+j*bitmapRowOffset, null);
+					canvas.drawBitmap(scaledBlueHex, j*bitmapXSpacing, i*bitmapYSpacing+j*bitmapRowOffset, null);
 					break;
 				case 2:
-					canvas.drawBitmap(redHex, j*bitmapXSpacing, i*bitmapYSpacing+j*bitmapRowOffset, null);
+					canvas.drawBitmap(scaledRedHex, j*bitmapXSpacing, i*bitmapYSpacing+j*bitmapRowOffset, null);
 					break;
 				default:
 					Log.d(TAG, "Unknown player " + hextiles[i][j].getPlayer());
