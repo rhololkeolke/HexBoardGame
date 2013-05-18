@@ -1,13 +1,7 @@
 package com.devinschwab.hexboardgame;
 
-import android.graphics.Bitmap;
-import android.graphics.Canvas;
-import android.util.Log;
 
-public class HexTile {
-	
-	private static final String TAG = HexTile.class.getSimpleName();
-	
+public class HexTile {	
 	private int player;
 	
 	public HexTile(int player) {

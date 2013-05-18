@@ -1,6 +1,5 @@
 package com.devinschwab.hexboardgame;
 
-import android.annotation.SuppressLint;
 import android.graphics.Canvas;
 import android.util.Log;
 import android.view.SurfaceHolder;
