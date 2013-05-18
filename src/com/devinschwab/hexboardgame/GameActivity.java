@@ -19,7 +19,7 @@ public class GameActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState){
 		super.onCreate(savedInstanceState);
-		setContentView(new MainGamePanel(this));
+		setContentView(new MainGamePanel(this, (GameTypes)this.getIntent().getSerializableExtra(GAME_TYPE_KEY)));
 		Log.d(TAG, "View added");
 	}
 	

@@ -21,13 +21,16 @@ public class MainGamePanel extends SurfaceView implements SurfaceHolder.Callback
 	private MotionEvent touchEvent;
 	private int playerTurn;
 	
+	private GameActivity.GameTypes gameType;
+	
 	private boolean gameOver = false;
 	
 	private final Context context;
 		
-	public MainGamePanel(Context context) {
+	public MainGamePanel(Context context, GameActivity.GameTypes gameType) {
 		super(context);
 		this.context = context;
+		this.gameType = gameType;
 		getHolder().addCallback(this);
 		
 		touchEvent = null;
@@ -88,6 +91,14 @@ public class MainGamePanel extends SurfaceView implements SurfaceHolder.Callback
 	public void update() {
 		if(gameOver)
 			return;
+		
+		if(gameType == GameActivity.GameTypes.SINGLE_PLAYER && playerTurn == 2)
+		{
+			// AI agent goes here
+			while(!board.selectTile(playerTurn, (int)(Math.random()*board.size()), (int)(Math.random()*board.size())))
+			{}
+			playerTurn = 1;
+		}
 		
 		HexTile touchedTile = null;
 		synchronized(touchEventLock) {

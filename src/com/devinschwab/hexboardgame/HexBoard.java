@@ -40,8 +40,12 @@ public class HexBoard {
 	private final Set<BoardIndex> goalPlayerOneTiles;
 	private final Set<BoardIndex> goalPlayerTwoTiles;
 	
-	public HexBoard(Context context, int size)
-	{		
+	private final int size;
+	
+	public HexBoard(Context context, int size) {	
+		
+		this.size = size;
+		
 		// load the bitmaps
 		blankHex = BitmapFactory.decodeResource(context.getResources(), R.drawable.blank_hex);
 		blueHex = BitmapFactory.decodeResource(context.getResources(), R.drawable.blue_hex);
@@ -234,5 +238,27 @@ public class HexBoard {
 			return "(" + i + "," + j + ")";
 		}
 		
+	}
+
+	public int size() {
+		return size;
+	}
+
+	public boolean selectTile(int player, int i, int j) {
+		if(i < 0 || i >= hextiles.length || j < 0 || j >= hextiles.length)
+		{
+			Log.e(TAG, "Invalid tile (" + i + "," + j + ") selected for player " + player);
+			return false;
+		}
+		
+		if(hextiles[i][j] != null && hextiles[i][j].getPlayer() == 0)
+		{
+			Log.d(TAG, "Setting tile (" + i + "," + j + ") to player " + player);
+			hextiles[i][j].setPlayer(player);
+			return true;
+		} else {
+			Log.d(TAG, "Tile (" + i + "," + j + ") already belongs to player " + player);
+		}
+		return false;
 	}
 }
