@@ -1,14 +1,15 @@
 package com.devinschwab.hexboardgame;
 
-import android.app.Activity;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.Paint.Style;
+import android.graphics.Rect;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
-import android.widget.Toast;
 
 public class MainGamePanel extends SurfaceView implements SurfaceHolder.Callback {
 	private static final String TAG = MainGamePanel.class.getSimpleName();
@@ -19,6 +20,8 @@ public class MainGamePanel extends SurfaceView implements SurfaceHolder.Callback
 	private final Object touchEventLock = new Object();
 	private MotionEvent touchEvent;
 	private int playerTurn;
+	
+	private boolean gameOver = false;
 	
 	private final Context context;
 		
@@ -83,6 +86,9 @@ public class MainGamePanel extends SurfaceView implements SurfaceHolder.Callback
 
 	// handles user input and updates the game state
 	public void update() {
+		if(gameOver)
+			return;
+		
 		HexTile touchedTile = null;
 		synchronized(touchEventLock) {
 			if(touchEvent != null)
@@ -102,8 +108,8 @@ public class MainGamePanel extends SurfaceView implements SurfaceHolder.Callback
 			
 			if(board.checkForWinner(playerTurn))
 			{
-				
-				((Activity)context).finish();
+				gameOver = true;
+				return;
 			}
 			
 			if(playerTurn == 1)
@@ -120,6 +126,16 @@ public class MainGamePanel extends SurfaceView implements SurfaceHolder.Callback
 		// fills the canvas with white
 		canvas.drawColor(Color.WHITE);
 		board.draw(canvas);
+		if(gameOver) {
+			Paint paint = new Paint(); 
+			paint.setColor(Color.WHITE); 
+			paint.setStyle(Style.FILL);
+			canvas.drawRect(new Rect(0, canvas.getHeight()/2-160, canvas.getWidth(), canvas.getHeight()/2+60), paint);
+			
+			paint.setColor(Color.BLACK);
+			paint.setTextSize(120);
+			canvas.drawText("Player " + playerTurn + " Won!", 0, canvas.getHeight()/2, paint);  
+		}
 	}
 
 }
