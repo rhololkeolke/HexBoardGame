@@ -104,8 +104,10 @@ public class HexBoard {
 	}
 
 	public HexTile getTouchedTile(MotionEvent touchEvent) {
-		// TODO Auto-generated method stub
+		int j = (int)(touchEvent.getX()/bitmapXSpacing);
+		int i = (int)((touchEvent.getY()-j*bitmapRowOffset)/bitmapYSpacing);
+		if(i >= 0 && i < hextiles.length && j >= 0 && j<hextiles[i].length)
+			return hextiles[i][j];
 		return null;
 	}
-
 }

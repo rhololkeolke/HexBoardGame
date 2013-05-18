@@ -79,10 +79,15 @@ public class MainGamePanel extends SurfaceView implements SurfaceHolder.Callback
 		render(canvas);
 	}
 
+	// handles user input and updates the game state
 	public void update() {
-		HexTile touchedTile;
+		HexTile touchedTile = null;
 		synchronized(touchEventLock) {
-			touchedTile = board.getTouchedTile(touchEvent);
+			if(touchEvent != null)
+			{
+				touchedTile = board.getTouchedTile(touchEvent);
+				touchEvent = null;
+			}
 		}
 		
 		if(touchedTile != null)
@@ -100,6 +105,7 @@ public class MainGamePanel extends SurfaceView implements SurfaceHolder.Callback
 		}
 	}
 
+	// draws the game
 	public void render(Canvas canvas) {
 		// fills the canvas with white
 		canvas.drawColor(Color.WHITE);
