@@ -71,7 +71,16 @@ public class MainGamePanel extends SurfaceView implements SurfaceHolder.Callback
 	
 	@Override
 	protected void onDraw(Canvas canvas) {
-		// fills the canvas with black
+		render(canvas);
+	}
+
+	public void update() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void render(Canvas canvas) {
+		// fills the canvas with white
 		canvas.drawColor(Color.WHITE);
 		board.draw(canvas);
 	}
