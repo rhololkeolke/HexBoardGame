@@ -18,14 +18,18 @@ public class HexBoard {
 	private Bitmap blueHex;
 	private Bitmap redHex;
 	
-	private int bitmapSpacing;
+	private int bitmapXSpacing;
+	private int bitmapYSpacing;
+	private int bitmapRowOffset;
 	private int bitmapScale;
 	
 	public HexBoard(Context context, int size)
 	{
 		this.context = context;
 		
-		bitmapSpacing = 70;
+		bitmapXSpacing = 51;
+		bitmapYSpacing = 70;
+		bitmapRowOffset = bitmapYSpacing/2;
 		bitmapScale = 70;
 		
 		// load the bitmaps
@@ -57,13 +61,13 @@ public class HexBoard {
 				switch(hextiles[i][j].getPlayer())
 				{
 				case 0:
-					canvas.drawBitmap(blankHex, j*bitmapSpacing, i*bitmapSpacing, null);
+					canvas.drawBitmap(blankHex, j*bitmapXSpacing, i*bitmapYSpacing+j*bitmapRowOffset, null);
 					break;
 				case 1:
-					canvas.drawBitmap(blueHex, j*bitmapSpacing, i*bitmapSpacing, null);
+					canvas.drawBitmap(blueHex, j*bitmapXSpacing-i*bitmapYSpacing, i*bitmapRowOffset, null);
 					break;
 				case 2:
-					canvas.drawBitmap(redHex, j*bitmapSpacing, i*bitmapSpacing, null);
+					canvas.drawBitmap(redHex, j*bitmapXSpacing-i*bitmapYSpacing, i*bitmapRowOffset, null);
 					break;
 				default:
 					Log.d(TAG, "Unknown player " + hextiles[i][j].getPlayer());
