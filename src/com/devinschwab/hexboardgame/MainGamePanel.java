@@ -2,6 +2,7 @@ package com.devinschwab.hexboardgame;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -14,13 +15,14 @@ public class MainGamePanel extends SurfaceView implements SurfaceHolder.Callback
 	private static final String TAG = MainGamePanel.class.getSimpleName();
 	private MainGameThread thread;
 	
-	private HexTile tile;
+	private HexBoard board;
 		
 	public MainGamePanel(Context context) {
 		super(context);
 		getHolder().addCallback(this);
 		
-		tile = new HexTile(BitmapFactory.decodeResource(getResources(), R.drawable.blank_hex), 100, 100);
+		// create the board
+		board = new HexBoard(context, 11);
 		
 		// create the game loop thread
 		thread = new MainGameThread(this.getHolder(), this);
@@ -71,7 +73,7 @@ public class MainGamePanel extends SurfaceView implements SurfaceHolder.Callback
 	protected void onDraw(Canvas canvas) {
 		// fills the canvas with black
 		canvas.drawColor(Color.WHITE);
-		tile.draw(canvas);
+		board.draw(canvas);
 	}
 
 }
