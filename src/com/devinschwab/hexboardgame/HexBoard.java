@@ -1,5 +1,10 @@
 package com.devinschwab.hexboardgame;
 
+import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Set;
+
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -26,6 +31,12 @@ public class HexBoard {
 	private int bitmapRowOffset;
 	private int bitmapScale;
 	
+	private final List<BoardIndex> startPlayerOneTiles;
+	private final List<BoardIndex> startPlayerTwoTiles;
+	
+	private final Set<BoardIndex> goalPlayerOneTiles;
+	private final Set<BoardIndex> goalPlayerTwoTiles;
+	
 	public HexBoard(Context context, int size)
 	{		
 		// load the bitmaps
@@ -35,16 +46,29 @@ public class HexBoard {
 
 		updateScale(.65f);
 		
+		startPlayerOneTiles = new LinkedList<BoardIndex>();
+		startPlayerTwoTiles = new LinkedList<BoardIndex>();
+		
+		goalPlayerOneTiles = new HashSet<BoardIndex>();
+		goalPlayerTwoTiles = new HashSet<BoardIndex>();
+		
 		hextiles = new HexTile[size+2][size+2];
 		for(int j=1; j<size+1; j++)
 		{
 			hextiles[0][j] = new HexTile(1);
 			hextiles[size+1][j] = new HexTile(1);
+			
+			startPlayerOneTiles.add(new BoardIndex(0, j));
+			goalPlayerOneTiles.add(new BoardIndex(size+1, j));
 		}
+		
 		for(int i=1; i<size+1; i++)
 		{
 			hextiles[i][0] = new HexTile(2);
 			hextiles[i][size+1] = new HexTile(2);
+			
+			startPlayerTwoTiles.add(new BoardIndex(i, 0));
+			goalPlayerTwoTiles.add(new BoardIndex(i, size+1));
 		}
 
 		for(int i=1; i<size+1; i++)
@@ -60,6 +84,9 @@ public class HexBoard {
 		hextiles[0][size+1] = new HexTile(2);
 		hextiles[size+1][0] = new HexTile(2);
 		hextiles[size+1][size+1] = new HexTile(-1);
+		
+		//goalPlayerTwoTiles.add(new BoardIndex(0, size+1));
+		//goalPlayerTwoTiles.add(new BoardIndex(size+1, 0));
 	}
 	
 	public void updateScale(float scale) {
@@ -110,7 +137,96 @@ public class HexBoard {
 		int j = (int)(touchEvent.getX()/bitmapXSpacing);
 		int i = (int)((touchEvent.getY()-j*bitmapRowOffset)/bitmapYSpacing);
 		if(i >= 0 && i < hextiles.length && j >= 0 && j<hextiles[i].length)
+		{
+			Log.d(TAG, "tile (" + i + "," + j + ") was touched");
 			return hextiles[i][j];
+		}
 		return null;
+	}
+
+	public boolean checkForWinner(int player) {
+		List<BoardIndex> openNodes;
+		Set<BoardIndex> goalNodes;
+		if(player == 1)
+		{
+			openNodes = new LinkedList<BoardIndex>(startPlayerOneTiles);
+			goalNodes = goalPlayerOneTiles;
+		}
+		else if(player == 2)
+		{
+			openNodes = new LinkedList<BoardIndex>(startPlayerTwoTiles);
+			goalNodes = goalPlayerTwoTiles;
+		}
+		else
+			return false; // maybe this should throw an exception
+		
+		Set<BoardIndex> closedNodes = new HashSet<BoardIndex>(openNodes);
+		
+		// loop until all contiguous nodes have been examined
+		while(openNodes.size() > 0) {
+			List<BoardIndex> newOpenNodes = new LinkedList<BoardIndex>();
+			for(BoardIndex index : openNodes) {
+				closedNodes.add(index);
+				
+				for(int i=index.i-1; i<=index.i+1; i++) {
+					for(int j=index.j-1; j<=index.j+1; j++) {
+						// the indices (i-1, j-1) and (i+1, j+1) are invalid so skip them
+						if((i == index.i-1 && j == index.j-1) || (i == index.i+1 && j == index.j+1))
+							continue;
+						// if valid index
+						if(i >= 0 && i < hextiles.length && j >= 0 && j < hextiles[i].length) {
+							BoardIndex newIndex = new BoardIndex(i, j);
+							
+							// if tile belongs to the goal nodes then player is a winner
+							if(goalNodes.contains(newIndex))
+								return true;
+							
+							// if tile belongs to player and it hasn't already been visited
+							if(hextiles[i][j].getPlayer() == player && !closedNodes.contains(newIndex) ) {
+								newOpenNodes.add(newIndex); 
+								// kind of abusing the closedNodes list but means 
+								// that new nodes won't be added twice
+								closedNodes.add(newIndex); 
+							}
+						}
+					}
+				}
+			}
+			openNodes = newOpenNodes;
+		}
+		
+		return false;
+	}
+	
+	private class BoardIndex {
+		public final int i;
+		public final int j;
+		private final int hashCode;
+		
+		public BoardIndex(int i, int j) {
+			this.i = i;
+			this.j = j;
+			hashCode = i*10^((int)(Math.log10(j)+1)) + j;
+		}
+		
+		@Override
+		public final int hashCode() {
+			return hashCode;
+		}
+		
+		@Override
+		public final boolean equals(final Object obj) {
+			if(!(obj instanceof BoardIndex))
+				return false;
+			BoardIndex other = (BoardIndex)obj;
+			
+			return this.i == other.i && this.j == other.j;
+		}
+		
+		@Override
+		public final String toString() {
+			return "(" + i + "," + j + ")";
+		}
+		
 	}
 }

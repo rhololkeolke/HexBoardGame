@@ -1,5 +1,6 @@
 package com.devinschwab.hexboardgame;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -7,6 +8,7 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+import android.widget.Toast;
 
 public class MainGamePanel extends SurfaceView implements SurfaceHolder.Callback {
 	private static final String TAG = MainGamePanel.class.getSimpleName();
@@ -17,9 +19,12 @@ public class MainGamePanel extends SurfaceView implements SurfaceHolder.Callback
 	private final Object touchEventLock = new Object();
 	private MotionEvent touchEvent;
 	private int playerTurn;
+	
+	private final Context context;
 		
 	public MainGamePanel(Context context) {
 		super(context);
+		this.context = context;
 		getHolder().addCallback(this);
 		
 		touchEvent = null;
@@ -95,11 +100,19 @@ public class MainGamePanel extends SurfaceView implements SurfaceHolder.Callback
 			
 			touchedTile.setPlayer(playerTurn);
 			
+			if(board.checkForWinner(playerTurn))
+			{
+				
+				((Activity)context).finish();
+			}
+			
 			if(playerTurn == 1)
 				playerTurn = 2;
 			else
 				playerTurn = 1;
 		}
+		
+		
 	}
 
 	// draws the game
