@@ -37,6 +37,7 @@ public class MainGamePanel extends SurfaceView implements SurfaceHolder.Callback
 	@Override
 	public void surfaceDestroyed(SurfaceHolder holder) {
 		boolean retry = true;
+		thread.setRunning(false);
 		while(retry) {
 			try {
 				thread.join();
