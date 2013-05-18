@@ -31,6 +31,9 @@ public class HexBoard {
 	private int bitmapRowOffset;
 	private int bitmapScale;
 	
+	private int boardXOffset;
+	private int boardYOffset;
+	
 	private final List<BoardIndex> startPlayerOneTiles;
 	private final List<BoardIndex> startPlayerTwoTiles;
 	
@@ -45,6 +48,9 @@ public class HexBoard {
 		redHex = BitmapFactory.decodeResource(context.getResources(), R.drawable.red_hex);
 
 		updateScale(.65f);
+		
+		boardXOffset = bitmapXSpacing;
+		boardYOffset = 0;
 		
 		startPlayerOneTiles = new LinkedList<BoardIndex>();
 		startPlayerTwoTiles = new LinkedList<BoardIndex>();
@@ -118,13 +124,13 @@ public class HexBoard {
 					// do nothing (this is for the corners)
 					break;
 				case 0:
-					canvas.drawBitmap(scaledBlankHex, j*bitmapXSpacing, i*bitmapYSpacing+j*bitmapRowOffset, null);
+					canvas.drawBitmap(scaledBlankHex, boardXOffset+j*bitmapXSpacing, boardYOffset+i*bitmapYSpacing+j*bitmapRowOffset, null);
 					break;
 				case 1:
-					canvas.drawBitmap(scaledBlueHex, j*bitmapXSpacing, i*bitmapYSpacing+j*bitmapRowOffset, null);
+					canvas.drawBitmap(scaledBlueHex, boardXOffset+j*bitmapXSpacing, boardYOffset+i*bitmapYSpacing+j*bitmapRowOffset, null);
 					break;
 				case 2:
-					canvas.drawBitmap(scaledRedHex, j*bitmapXSpacing, i*bitmapYSpacing+j*bitmapRowOffset, null);
+					canvas.drawBitmap(scaledRedHex, boardXOffset+j*bitmapXSpacing, boardYOffset+i*bitmapYSpacing+j*bitmapRowOffset, null);
 					break;
 				default:
 					Log.d(TAG, "Unknown player " + hextiles[i][j].getPlayer());
@@ -134,8 +140,8 @@ public class HexBoard {
 	}
 
 	public HexTile getTouchedTile(MotionEvent touchEvent) {
-		int j = (int)(touchEvent.getX()/bitmapXSpacing);
-		int i = (int)((touchEvent.getY()-j*bitmapRowOffset)/bitmapYSpacing);
+		int j = (int)((touchEvent.getX()-boardXOffset)/bitmapXSpacing);
+		int i = (int)((touchEvent.getY()-j*bitmapRowOffset - boardYOffset)/bitmapYSpacing);
 		if(i >= 0 && i < hextiles.length && j >= 0 && j<hextiles[i].length)
 		{
 			Log.d(TAG, "tile (" + i + "," + j + ") was touched");
