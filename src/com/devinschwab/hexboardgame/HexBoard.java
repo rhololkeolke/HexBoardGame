@@ -84,7 +84,7 @@ public class HexBoard {
 				switch(hextiles[i][j].getPlayer())
 				{
 				case -1:
-					// do nothing (this is for the corners
+					// do nothing (this is for the corners)
 					break;
 				case 0:
 					canvas.drawBitmap(blankHex, j*bitmapXSpacing, i*bitmapYSpacing+j*bitmapRowOffset, null);
