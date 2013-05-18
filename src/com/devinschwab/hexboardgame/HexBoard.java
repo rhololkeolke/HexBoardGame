@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.util.Log;
+import android.view.MotionEvent;
 
 public class HexBoard {
 	
@@ -100,6 +101,11 @@ public class HexBoard {
 				}
 			}
 		}
+	}
+
+	public HexTile getTouchedTile(MotionEvent touchEvent) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

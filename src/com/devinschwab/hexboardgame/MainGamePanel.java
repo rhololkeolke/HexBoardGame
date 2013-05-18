@@ -16,10 +16,17 @@ public class MainGamePanel extends SurfaceView implements SurfaceHolder.Callback
 	private MainGameThread thread;
 	
 	private HexBoard board;
+	
+	private final Object touchEventLock = new Object();
+	private MotionEvent touchEvent;
+	private int playerTurn;
 		
 	public MainGamePanel(Context context) {
 		super(context);
 		getHolder().addCallback(this);
+		
+		touchEvent = null;
+		playerTurn = 1;
 		
 		// create the board
 		board = new HexBoard(context, 11);
@@ -59,11 +66,9 @@ public class MainGamePanel extends SurfaceView implements SurfaceHolder.Callback
 	@Override
 	public boolean onTouchEvent(MotionEvent event) {
 		if(event.getAction() == MotionEvent.ACTION_DOWN) {
-			if(event.getY() > getHeight() - 50) {
-				thread.setRunning(false);
-				((Activity)getContext()).finish();
-			} else {
+			synchronized(touchEventLock) {
 				Log.d(TAG, "Coords: x=" + event.getX() + ",y=" + event.getY());
+				touchEvent = event;
 			}
 		}
 		return super.onTouchEvent(event);
@@ -75,8 +80,24 @@ public class MainGamePanel extends SurfaceView implements SurfaceHolder.Callback
 	}
 
 	public void update() {
-		// TODO Auto-generated method stub
+		HexTile touchedTile;
+		synchronized(touchEventLock) {
+			touchedTile = board.getTouchedTile(touchEvent);
+		}
 		
+		if(touchedTile != null)
+		{
+			Log.d(TAG, "Tile was touched");
+			if(touchedTile.getPlayer() != 0)
+				return;
+			
+			touchedTile.setPlayer(playerTurn);
+			
+			if(playerTurn == 1)
+				playerTurn = 2;
+			else
+				playerTurn = 1;
+		}
 	}
 
 	public void render(Canvas canvas) {
