@@ -3,14 +3,9 @@ package com.devinschwab.hexboardgame;
 import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Menu;
-
-import com.devinschwab.hexboardgame.rules.GameRules;
-import com.devinschwab.hexboardgame.rules.LocalNetworkRules;
-import com.devinschwab.hexboardgame.rules.PassAndPlayRules;
-import com.devinschwab.hexboardgame.rules.SinglePlayerRules;
 
 public class GameActivity extends Activity {
+	private static final String TAG = GameActivity.class.getSimpleName();
 	
 	public static final String GAME_TYPE_KEY = "game type";
 	
@@ -24,37 +19,19 @@ public class GameActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState){
 		super.onCreate(savedInstanceState);
-		
-		HexBoard board = new HexBoard();
-		
-		GameSurfaceView surface_view = new GameSurfaceView(this, board);
-		
-		GameRules rules = null;
-		switch((GameActivity.GameTypes) this.getIntent().getSerializableExtra(GameActivity.GAME_TYPE_KEY))
-		{
-		case SINGLE_PLAYER:
-			rules = new SinglePlayerRules(board);
-			break;
-		case PASS_AND_PLAY:
-			rules = new PassAndPlayRules(board);
-			break;
-		case LOCAL_NETWORK:
-			rules = new LocalNetworkRules(board);
-			break;
-		default:
-			Log.e("game type", "Unrecognized game type");
-			System.exit(1);
-		}
-		rules.start();
-		
-		setContentView(surface_view);
+		setContentView(new MainGamePanel(this));
+		Log.d(TAG, "View added");
 	}
-
+	
 	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.game, menu);
-		return true;
-	}
+	 protected void onDestroy() {
+	  Log.d(TAG, "Destroying...");
+	  super.onDestroy();
+	 }
 
+	 @Override
+	 protected void onStop() {
+	  Log.d(TAG, "Stopping...");
+	  super.onStop();
+	 }
 }
